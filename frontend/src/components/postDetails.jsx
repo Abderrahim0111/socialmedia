@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
@@ -13,6 +14,7 @@ const PostDetails = ({toggleTheme}) => {
   const [postData, setpostData] = useState({});
   const [currentImageIndex, setcurrentImageIndex] = useState(0);
   const [loading, setloading] = useState(true);
+  
   const handleArrowClick = (direction) => {
     const newIndex =
       direction == "left"
@@ -106,8 +108,8 @@ const PostDetails = ({toggleTheme}) => {
   }
 
   return (
-    <div className="  fixed top-0 bottom-0 left-0 right-0  flex items-center justify-center">
-      <div className={` flex flex-col sm:flex-row w-full sm:max-w-2xl ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} h-[30rem] sm:overflow-y-visible overflow-y-scroll scrollbar mx-2`}>
+    <div className=" flex items-center justify-center">
+      <div className={` flex mt-16 flex-col sm:flex-row w-full shadow-xl sm:max-w-3xl ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} overflow-hidden rounded-xl h-[34rem] sm:overflow-y-visible overflow-y-scroll scrollbar mx-2`}>
         <div className="flex-1 relative">
           {postData.pictures.length === 0 ? (
             <img
@@ -152,7 +154,7 @@ const PostDetails = ({toggleTheme}) => {
           )}
         </div>
         <div className="  flex-1 flex flex-col gap-3 ">
-          <div className={` sticky ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} border-b-2 border-[#363636] p-2  top-0 flex items-center justify-between`}>
+          <div className={` sticky ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} z-10 border-b-2 border-[#363636] p-2  top-0 flex items-center justify-between`}>
             <div className=" flex items-center gap-3">
               <div className=" overflow-hidden rounded-full flex items-center justify-center h-9 w-9">
                 {postData.user.profileimage ? (
@@ -196,7 +198,7 @@ const PostDetails = ({toggleTheme}) => {
             </div>
             <p>{postData.description}</p>
             <p>{postData.location}</p>
-            <div className=" w-80 mt-10">
+            <div className=" w-full mt-8">
               
               {postData.comments.map((comment, index) => {
                 return (

@@ -13,6 +13,7 @@ const Post = ({ postData, toggleTheme }) => {
   const [isLikes, setisLikes] = useState(false);
   const dispatch = useDispatch()
   const likeRef = useRef();
+  
   const handleArrowClick = (direction) => {
     const newIndex =
       direction === "left"

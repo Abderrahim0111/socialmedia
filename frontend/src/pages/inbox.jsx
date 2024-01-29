@@ -112,7 +112,7 @@ const Inbox = ({toggleTheme}) => {
 
   if (loading) return <p className=" ">Loading...</p>;
   return (
-    <div className=" flex min-h-screen sm:ml-[-18px] mt-[-32px]">
+    <div className=" flex min-h-screen mb-[-100px] sm:ml-[-18px] mt-[-32px]">
       <div className={`${isClicked && "hidden"} sm:block p-3 border-r-2 border-[#262626] w-full sm:w-80`}>
         <div className={` px-3 pt-3 sticky top-[55px] sm:top-0 z-10 ${toggleTheme === 'dark'? 'bg-black': 'bg-white'}`}>
           <div className=" flex items-center justify-between mb-5">

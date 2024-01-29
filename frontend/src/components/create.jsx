@@ -28,7 +28,7 @@ const Create = ({ handleChange, toggleTheme }) => {
           }}
           className=" bg-[#027FFE] rounded-lg py-1 px-2 cursor-pointer hover:opacity-80 transition-all duration-300"
         >
-          Select from computer
+          Select from device
         </button>
       </div>
     </div>

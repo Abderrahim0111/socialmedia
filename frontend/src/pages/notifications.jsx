@@ -18,7 +18,7 @@ const Notifications = ({toggleTheme}) => {
   }, [notifications]);
   if (loading) return <p className=" ">Loading...</p>;
   return (
-    <div className="">
+    <div className="  max-w-lg mx-auto">
       {notifications.map((notification, index) => {
         return (
           <div className={` ${toggleTheme === 'dark'? 'bg-[#363636]': 'bg-[#F1F2F5]'} p-2 rounded-lg m-2`} key={index}>

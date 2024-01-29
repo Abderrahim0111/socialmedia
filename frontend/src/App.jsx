@@ -27,7 +27,7 @@ function App() {
               toggleTheme === "dark"
                 ? "bg-black text-white"
                 : "bg-white text-black"
-            }  sm:pt-8 py-24 min-h-screen sm:pl-24 lg:pl-48`}
+            }  sm:pt-8 py-24 min-h-screen sm:pl-[5rem] lg:pl-[11rem]`}
           >
             <Routes>
               <Route path="/" element={<Home {...{ toggleTheme }} />} />
