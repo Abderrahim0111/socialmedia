@@ -41,7 +41,7 @@ const Signup = ({toggleTheme}) => {
       onSubmit={handleSubmit}
       className=" flex flex-col max-w-lg mx-auto border border-[#262626] rounded-lg p-6 gap-3 "
     >
-      <h1 className="  text-2xl text-center mb-8">Instagram</h1>
+      <h1 className="  text-2xl text-center mb-8">Socialsnap</h1>
       <input
         onChange={handleChange}
         className={` rounded-lg p-2 outline-none ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} `}

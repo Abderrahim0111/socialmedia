@@ -198,11 +198,15 @@ const fetchCurrentUser = async (req, res) => {
 
 const fetchUsers = async (req, res) => {
   try {
+    const decoded = jwt.verify(req.cookies.jwt, process.env.JWT)
     const searchTerm = req.query.searchTerm || "";
     const users = await User.find({
       username: { $regex: searchTerm, $options: "i" },
     });
-    return res.json(users);
+    const filtrerUsers = users.filter((user) => {
+      return user._id.toString() !== decoded.id.toString()
+    })
+    return res.json(filtrerUsers);
   } catch (error) {
     return res.json({ error: error.message });
   }

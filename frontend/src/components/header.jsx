@@ -37,7 +37,7 @@ const Header = ({toggleTheme}) => {
   return (
     <header className={` ${toggleTheme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'} z-20 sm:hidden fixed top-0 left-0 right-0  flex justify-between p-3 border-b-2 border-[#262626]`}>
         <Link to="/" className=" relative ">
-          <h1 className=" text-xl sm:text-2xl">Instagram</h1>
+          <h1 className=" text-xl sm:text-2xl">Socialsnap</h1>
         </Link>
       <ul className=" flex gap-3 items-center">
         <li className={` relative flex items-center gap-2 ${toggleTheme === 'dark'?'bg-[#262626]' : 'bg-[#F1F2F5]'} py-1 px-2 rounded-lg`}>

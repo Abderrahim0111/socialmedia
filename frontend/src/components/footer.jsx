@@ -67,6 +67,7 @@ const Footer = ({toggleTheme, settoggleTheme}) => {
           <li
             className="flex items-center gap-3"
             onClick={() => {
+              window.scrollTo(0,0)
               settoggleSearchBigScreen(false);
               setisMore(false);
             }}
