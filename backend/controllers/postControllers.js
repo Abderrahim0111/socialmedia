@@ -112,7 +112,9 @@ const fetchAllPosts = async (req, res) => {
       .populate("likes")
       .populate("comments.user", "-password")
       .sort({ createdAt: -1 });
-    res.json(posts);
+    if(posts){
+      return res.json(posts);
+    }
   } catch (error) {
     res.json({ error: error.message });
   }
@@ -256,6 +258,77 @@ const fetchCommentedPosts = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.cookies.jwt, process.env.JWT)
+
+    const post = await Post.findById(req.params.postId)
+
+    if(post && post.user.toString() === decoded.id.toString()){
+      const update = await Post.findByIdAndDelete(req.params.postId)
+      return res.json('post deleted')
+    }
+    res.json({error: 'invalid information'})
+  } catch (error) {
+    return res.json({error: error.message})
+  }
+}
+
+const editComment = async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.cookies.jwt, process.env.JWT)
+
+    const post = await Post.findById(req.params.postId)
+
+    const commentIndex = post.comments.findIndex((comment) => {
+      return comment._id.toString() === req.params.commentId.toString()
+    })
+
+    const comment = post.comments.find((comment) => {
+      return comment._id.toString() === req.params.commentId.toString()
+    })
+
+    if(post && commentIndex !== -1 && req.body.newComment && comment.user.toString() === decoded.id.toString()){
+      const update = await Post.findByIdAndUpdate(req.params.postId, {
+        $set: {
+          [`comments.${commentIndex}.comment`]: req.body.newComment
+        }
+      }, {new: true})
+  
+      return res.json('updated')
+    }
+    res.json({error: 'invalid information'})
+  } catch (error) {
+    return res.json({error: error.message})
+  }
+}
+
+const deleteComment = async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.cookies.jwt, process.env.JWT)
+
+    const post = await Post.findById(req.params.postId)
+
+    const comment = post.comments.find((comment) => {
+      return comment._id.toString() === req.params.commentId.toString()
+    })
+    if(post && comment && comment.user.toString() === decoded.id.toString()){
+      const update = await Post.findByIdAndUpdate(req.params.postId, {
+        $pull: {
+          comments: {
+            _id: req.params.commentId
+          }
+        }
+      }, {new: true})
+  
+      return res.json('updated')
+    }
+    res.json({error: 'invalid information'})
+  } catch (error) {
+    return res.json({error: error.message})
+  }
+}
+
  
 module.exports = {
   createPost,
@@ -267,5 +340,8 @@ module.exports = {
   addComment,
   fetchUserSavedPosts,
   fetchLikedPosts,
-  fetchCommentedPosts
+  fetchCommentedPosts,
+  deletePost,
+  editComment,
+  deleteComment,
 };

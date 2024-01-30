@@ -5,8 +5,9 @@ import { Link, useParams } from "react-router-dom";
 import { loggedIn } from "../redux/userSlice";
 import IsPosts from "../components/isPosts";
 import IsSaved from "../components/isSaved";
+import NotFound from "./notFound";
 
-const Profile = ({settoggleTheme, toggleTheme}) => {
+const Profile = ({ settoggleTheme, toggleTheme }) => {
   const inputRef = useRef();
   const { username } = useParams();
   const { currentUser } = useSelector((state) => state.user);
@@ -22,6 +23,8 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
   const [isSaved, setisSaved] = useState(false);
   const [isMore, setisMore] = useState(false);
   const dispatch = useDispatch();
+
+
   const logout = async () => {
     try {
       const res = await fetch("/api/logout");
@@ -35,6 +38,7 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
       console.log(error.message);
     }
   };
+
   useEffect(() => {
     const fetchUserPosts = async () => {
       const res = await fetch(`/api/fetchUserPosts/${username}`);
@@ -42,20 +46,21 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
       if (!data.error) {
         setdataFetchingLoading(false);
         setuserPosts(data.posts);
-        setuser(data.user);
+        return setuser(data.user);
       }
+      setdataFetchingLoading(false)
     };
     fetchUserPosts();
     const fetchUserSavedPosts = async () => {
-      const res = await fetch(`/api/fetchUserSavedPosts/${username}`)
-      const data = await res.json()
-      if(!data.error){
-          setsavedPosts(data)
-          return setloading(false)
+      const res = await fetch(`/api/fetchUserSavedPosts/${username}`);
+      const data = await res.json();
+      if (!data.error) {
+        setsavedPosts(data);
+        return setloading(false);
       }
-      setloading(false)
-  } 
-  fetchUserSavedPosts()
+      setloading(false);
+    };
+    fetchUserSavedPosts();
   }, [userPosts, username]);
 
   const handleChange = async (e) => {
@@ -108,26 +113,31 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
   const handleFollow = async () => {
     try {
       const res = await fetch(`/api/follow/${username}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const data = await res.json()
-      console.log(data)
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.log(data);
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
-  const isFollower = user.followers &&  user.followers.filter((follower) => {
-    return follower._id === currentUser._id
-  })
-  // console.log(user)
+  const isFollower =
+    user.followers &&
+    user.followers.filter((follower) => {
+      return follower._id === currentUser._id;
+    });
 
 
   if (dataFetchingLoading) {
     return <p className=" ">Loading...</p>;
+  }
+
+  if (!user.username) {
+    return <NotFound />;
   }
 
   return (
@@ -167,67 +177,108 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
         </div>
         <div className="flex-1 flex flex-col gap-4">
           <div className=" relative flex gap-3 items-center">
-          {isMore && (
-        <div className={` absolute left-10 top-10 z-10 p-3 ${toggleTheme === 'dark' ? 'bg-[#262626]' : 'bg-[#F1F2F5]'}  rounded-xl`}>
-          <ul className=" ">
-            <Link to="/activity">
-            <li
-              onClick={() => {
-                setisMore(false);
-              }}
-              className={` p-2 ${toggleTheme === 'dark' ? 'hover:bg-[#363636]' : 'hover:bg-white'}  transition-all duration-300 cursor-pointer rounded-lg mb-2 flex items-center gap-3`}
-            >
-              <i className="fa-solid fa-chart-line" />
-              <span>Your activity</span>
-            </li></Link>
-            <li
-              onClick={() => {
-                setisMore(false);
-                settoggleTheme(toggleTheme === 'light' ? "dark" : "light")
-              }}
-              className={` p-2 ${toggleTheme === 'dark' ? 'hover:bg-[#363636]' : 'hover:bg-white'}  transition-all duration-300 cursor-pointer rounded-lg mb-2 flex items-center gap-3`}
-            >
-              <i className="fa-solid fa-moon" />
-              <span>Switch appearance</span>
-            </li>
-            <hr className=" border-t border-[#363636] mb-1" />
-            <li
-              onClick={() => {
-                logout();
-                setisMore(false);
-              }}
-              className={` p-2 ${toggleTheme === 'dark' ? 'hover:bg-[#363636]' : 'hover:bg-white'}  transition-all duration-300 cursor-pointer rounded-lg`}
-            >
-              <span>Log out</span>
-            </li>
-          </ul>
-        </div>
-      )}
+            {isMore && (
+              <div
+                className={` absolute left-10 top-10 z-10 p-3 ${
+                  toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+                }  rounded-xl`}
+              >
+                <ul className=" ">
+                  <Link to="/activity">
+                    <li
+                      onClick={() => {
+                        setisMore(false);
+                      }}
+                      className={` p-2 ${
+                        toggleTheme === "dark"
+                          ? "hover:bg-[#363636]"
+                          : "hover:bg-white"
+                      }  transition-all duration-300 cursor-pointer rounded-lg mb-2 flex items-center gap-3`}
+                    >
+                      <i className="fa-solid fa-chart-line" />
+                      <span>Your activity</span>
+                    </li>
+                  </Link>
+                  <li
+                    onClick={() => {
+                      setisMore(false);
+                      settoggleTheme(
+                        toggleTheme === "light" ? "dark" : "light"
+                      );
+                    }}
+                    className={` p-2 ${
+                      toggleTheme === "dark"
+                        ? "hover:bg-[#363636]"
+                        : "hover:bg-white"
+                    }  transition-all duration-300 cursor-pointer rounded-lg mb-2 flex items-center gap-3`}
+                  >
+                    <i className="fa-solid fa-moon" />
+                    <span>Switch appearance</span>
+                  </li>
+                  <hr className=" border-t border-[#363636] mb-1" />
+                  <li
+                    onClick={() => {
+                      logout();
+                      setisMore(false);
+                    }}
+                    className={` p-2 ${
+                      toggleTheme === "dark"
+                        ? "hover:bg-[#363636]"
+                        : "hover:bg-white"
+                    }  transition-all duration-300 cursor-pointer rounded-lg`}
+                  >
+                    <span>Log out</span>
+                  </li>
+                </ul>
+              </div>
+            )}
             <p className=" text-lg sm:text-xl">{user.username}</p>
             {currentUser.username === username ? (
               <>
-                <Link to='/account/edit' className={`${toggleTheme === 'dark' ? 'bg-[#262626]' : 'bg-[#F1F2F5]'} bg-[#262626] px-3 py-1 cursor-pointer hover:opacity-80 transition-all duration-300 rounded-lg`}>
-                <button>
-                  Edit profile
-                </button></Link>
-                <i onClick={() => {
-                  setisMore(!isMore)
-                }} className=" text-lg sm:text-2xl cursor-pointer hover:scale-110 transition-all duration-300 fa-solid fa-gear" />
+                <Link
+                  to="/account/edit"
+                  className={`${
+                    toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+                  } bg-[#262626] px-3 py-1 cursor-pointer hover:opacity-80 transition-all duration-300 rounded-lg`}
+                >
+                  <button>Edit profile</button>
+                </Link>
+                <i
+                  onClick={() => {
+                    setisMore(!isMore);
+                  }}
+                  className=" text-lg sm:text-2xl cursor-pointer hover:scale-110 transition-all duration-300 fa-solid fa-gear"
+                />
               </>
             ) : (
-              <button onClick={handleFollow} className={`${toggleTheme === 'dark' ? 'bg-[#262626]' : 'bg-[#F1F2F5]'} bg-[#262626] px-3 py-1 cursor-pointer hover:opacity-80 transition-all duration-300 rounded-lg`}>
-                { isFollower.length === 0 ? "Follow" : "Unfollow"}
+              <button
+                onClick={handleFollow}
+                className={`${
+                  toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+                } bg-[#262626] px-3 py-1 cursor-pointer hover:opacity-80 transition-all duration-300 rounded-lg`}
+              >
+                {isFollower.length === 0 ? "Follow" : "Unfollow"}
               </button>
             )}
           </div>
           <div className=" flex gap-4 sm:gap-6">
             <p>{userPosts.length} posts</p>
-            <p onClick={() => {
-              setisFollowers(true)
-            }} className=" underline cursor-pointer">{user.followers.length} followers</p>
-            <p onClick={() => {
-              setisFollowing(true)
-            }} className=" underline cursor-pointer">{user.following.length} following</p>
+            <p
+              onClick={() => {
+                setisFollowers(true);
+              }}
+              className=" underline cursor-pointer"
+            >
+              {user.followers.length} followers
+            </p>
+            <p
+              onClick={() => {
+                setisFollowing(true);
+              }}
+              className=" underline cursor-pointer"
+            >
+              {user.following.length} following
+            </p>
           </div>
           <p>{user.name}</p>
         </div>
@@ -239,10 +290,13 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
             onClick={() => {
               setisPosts(true);
               setisSaved(false);
-              
             }}
             className={` flex ${
-              isPosts ? `${toggleTheme === 'dark'? 'border-white':"border-[#262626]"} border-t-2` : "opacity-80"
+              isPosts
+                ? `${
+                    toggleTheme === "dark" ? "border-white" : "border-[#262626]"
+                  } border-t-2`
+                : "opacity-80"
             } items-center gap-2 cursor-pointer`}
           >
             <i className="fa-solid fa-table-cells" />
@@ -252,10 +306,13 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
             onClick={() => {
               setisPosts(false);
               setisSaved(true);
-              
             }}
             className={` flex ${
-              isSaved ? `${toggleTheme === 'dark'? 'border-white':"border-[#262626]"} border-t-2` : "opacity-80"
+              isSaved
+                ? `${
+                    toggleTheme === "dark" ? "border-white" : "border-[#262626]"
+                  } border-t-2`
+                : "opacity-80"
             } items-center gap-2 cursor-pointer`}
           >
             <i className="fa-regular fa-bookmark" />
@@ -267,7 +324,11 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
       {isSaved && <IsSaved {...{ username, toggleTheme, savedPosts }} />}
       {isEditProfileImage && (
         <div className=" fixed top-0 bottom-0 left-0 right-0 bg-[#00000099] z-20 flex items-center justify-center">
-          <div className={` flex flex-col items-center justify-center ${toggleTheme === 'dark' ? 'bg-[#262626]' : 'bg-[#F1F2F5]'}   rounded-xl w-[300px]`}>
+          <div
+            className={` flex flex-col items-center justify-center ${
+              toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+            }   rounded-xl w-[300px]`}
+          >
             <div className=" h-9 w-9 rounded-full overflow-hidden flex justify-center items-center mb-1 mt-3">
               {user.profileimage ? (
                 <img
@@ -312,9 +373,17 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
       )}
       {isFollowers && (
         <div className=" fixed top-0 bottom-0 left-0 right-0 bg-[#00000099] flex items-center justify-center z-20">
-          <div className={` p-3 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'}  flex flex-col w-[300px] h-fit rounded-xl `}>
+          <div
+            className={` p-3 ${
+              toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+            }  flex flex-col w-[300px] h-fit rounded-xl `}
+          >
             <div className=" flex-1 flex flex-col  overflow-y-scroll scrollbar">
-              <div className={`flex items-center border-b-2 border-[#363636] pb-2 mb-3 justify-between sticky top-0 z-10 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'}`}>
+              <div
+                className={`flex items-center border-b-2 border-[#363636] pb-2 mb-3 justify-between sticky top-0 z-10 ${
+                  toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+                }`}
+              >
                 <div className=""></div>
                 <h3 className=" text-left">Followers</h3>
                 <i
@@ -329,22 +398,28 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
                   return (
                     <div
                       key={index}
-                      className={` ${toggleTheme === 'dark'? 'bg-[#363636]': 'bg-white'} rounded-lg p-1 mb-2`}
+                      className={` ${
+                        toggleTheme === "dark" ? "bg-[#363636]" : "bg-white"
+                      } rounded-lg p-1 mb-2`}
                     >
                       <div className=" flex items-center gap-2">
-                        <div className=" h-9 w-9 rounded-full">
+                        <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#262626]">
                           <img
                             src={follower.profileimage}
                             className=" h-full w-full object-contain"
                             alt=""
                           />
                         </div>
-                        <div className="">
+                        <Link
+                          onClick={() => {
+                            setisFollowers(false);
+                          }}
+                          to={`/${follower.username}`}
+                          className=" cursor-pointer"
+                        >
                           <p>{follower.username}</p>
-                          <p className=" text-sm opacity-80">
-                            
-                          </p>
-                        </div>
+                          <p className=" text-sm opacity-80"></p>
+                        </Link>
                       </div>
                     </div>
                   );
@@ -356,9 +431,17 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
       )}
       {isFollowing && (
         <div className=" fixed top-0 bottom-0 left-0 right-0 bg-[#00000099] flex items-center justify-center z-20">
-          <div className={` p-3 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'}  flex flex-col w-[300px] h-fit rounded-xl `}>
+          <div
+            className={` p-3 ${
+              toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+            }  flex flex-col w-[300px] h-fit rounded-xl `}
+          >
             <div className=" flex-1 flex flex-col  overflow-y-scroll scrollbar">
-              <div className={`flex items-center border-b-2 border-[#363636] pb-2 mb-3 justify-between sticky top-0 z-10 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'}`}>
+              <div
+                className={`flex items-center border-b-2 border-[#363636] pb-2 mb-3 justify-between sticky top-0 z-10 ${
+                  toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+                }`}
+              >
                 <div className=""></div>
                 <h3 className=" text-left">Following</h3>
                 <i
@@ -373,22 +456,28 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
                   return (
                     <div
                       key={index}
-                      className={` ${toggleTheme === 'dark'? 'bg-[#363636]': 'bg-white'} rounded-lg p-1 mb-2`}
+                      className={` ${
+                        toggleTheme === "dark" ? "bg-[#363636]" : "bg-white"
+                      } rounded-lg p-1 mb-2`}
                     >
                       <div className=" flex items-center gap-2">
-                        <div className=" h-9 w-9 rounded-full">
+                        <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#262626]">
                           <img
                             src={following.profileimage}
                             className=" h-full w-full object-contain"
                             alt=""
                           />
                         </div>
-                        <div className="">
+                        <Link
+                          to={`/${following.username}`}
+                          onClick={() => {
+                            setisFollowing(false);
+                          }}
+                          className=" cursor-pointer"
+                        >
                           <p>{following.username}</p>
-                          <p className=" text-sm opacity-80">
-                            
-                          </p>
-                        </div>
+                          <p className=" text-sm opacity-80"></p>
+                        </Link>
                       </div>
                     </div>
                   );
@@ -398,7 +487,6 @@ const Profile = ({settoggleTheme, toggleTheme}) => {
           </div>
         </div>
       )}
-      
     </div>
   );
 };

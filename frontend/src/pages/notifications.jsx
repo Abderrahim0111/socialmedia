@@ -23,7 +23,7 @@ const Notifications = ({toggleTheme}) => {
         return (
           <div className={` ${toggleTheme === 'dark'? 'bg-[#363636]': 'bg-[#F1F2F5]'} p-2 rounded-lg m-2`} key={index}>
             <div className="flex items-center gap-3">
-              <div className=" rounded-full h-10 w-10 overflow-hidden">
+              <div className=" rounded-full h-10 w-10 overflow-hidden border border-[#262626]">
                 <img
                   src={notification.user.profileimage}
                   className=" h-full w-full object-contain"

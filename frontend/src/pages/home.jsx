@@ -25,7 +25,7 @@ const Home = ({toggleTheme}) => {
   if (loading) return <p className=" ">Loading...</p>;
   return (
     <div className=" max-w-lg mx-auto  flex flex-col gap-5">
-      {postsData.map((postData, index) => {
+      { postsData.map((postData, index) => {
         return <Post key={index} {...{ postData, toggleTheme }} />;
       })}
     </div>
