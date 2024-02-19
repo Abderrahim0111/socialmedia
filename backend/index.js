@@ -5,7 +5,7 @@ app.use(express.json());
 const dotenv = require("dotenv");
 dotenv.config();
 
-const port = 3000;
+const port = process.env.PORT;
 
 const cors = require("cors");
 app.use(cors());
@@ -34,10 +34,3 @@ const chatRouter = require('./routes/chatRoutes')
 app.use('/api', chatRouter)
 const messageRouter = require('./routes/messageRoutes')
 app.use('/api', messageRouter)
-
-const path = require("path");
-app.use(express.static(path.join(__dirname, "..", "/frontend/dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"));
-});

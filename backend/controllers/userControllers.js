@@ -225,6 +225,11 @@ const fetchUser = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const decoded = jwt.verify(req.cookies.jwt, process.env.JWT);
+    if(req.body.password){
+      const salt = await bcrypt.genSalt()
+      const hashedPass = await bcrypt.hash(req.body.password, salt)
+      req.body.password = hashedPass
+    }
     if (req.body.profileimage) {
       cloudinary.uploader.upload(
         req.body.profileimage,

@@ -28,9 +28,13 @@ const Header = ({ toggleTheme }) => {
         toggleTheme === "dark" ? "bg-black text-white" : "bg-white text-black"
       } z-20 sm:hidden fixed top-0 left-0 right-0  flex justify-between p-3 border-b-2 border-[#262626]`}
     >
-      <Link onClick={() => {
-        window.scrollTo(0,0)
-      }} to="/" className=" relative ">
+      <Link
+        onClick={() => {
+          window.scrollTo(0, 0);
+        }}
+        to="/"
+        className=" relative "
+      >
         <h1 className=" text-xl sm:text-2xl">Socialsnap</h1>
       </Link>
       <ul className=" flex gap-3 items-center">
@@ -97,12 +101,18 @@ const Header = ({ toggleTheme }) => {
                       toggleTheme === "dark" ? "bg-[#363636]" : "bg-white"
                     } mb-2 p-2 rounded-lg`}
                   >
-                    <div className=" rounded-full h-9 w-9 overflow-hidden">
-                      <img
-                        src={user.profileimage}
-                        className=" h-full w-full object-contain"
-                        alt=""
-                      />
+                    <div className=" rounded-full h-9 w-9 overflow-hidden border border-[#262626]">
+                      {user.profileimage ? (
+                        <img
+                          src={user.profileimage}
+                          className=" h-full w-full object-contain"
+                          alt=""
+                        />
+                      ) : (
+                        <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                          {user.username[0]}
+                        </div>
+                      )}
                     </div>
                     <p>{user.username}</p>
                   </Link>

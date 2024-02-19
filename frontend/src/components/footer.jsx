@@ -136,11 +136,17 @@ const Footer = ({ toggleTheme, settoggleTheme }) => {
                     } mb-2 p-2 rounded-lg `}
                   >
                     <div className=" border border-[#262626] rounded-full h-9 w-9 overflow-hidden">
-                      <img
-                        src={user.profileimage}
-                        className=" h-full w-full object-contain"
-                        alt=""
-                      />
+                      {user.profileimage ? (
+                        <img
+                          src={user.profileimage}
+                          className=" h-full w-full object-contain"
+                          alt=""
+                        />
+                      ) : (
+                        <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                          {user.username[0]}
+                        </div>
+                      )}
                     </div>
                     <p>{user.username}</p>
                   </Link>

@@ -127,9 +127,9 @@ const PostDetails = ({ toggleTheme }) => {
         body: JSON.stringify({ newComment: newComment }),
       });
       const data = await res.json();
-      if(!data.error){
-        setnewComment('')
-        seteditComment(false)
+      if (!data.error) {
+        setnewComment("");
+        seteditComment(false);
       }
       console.log(data);
     } catch (error) {
@@ -154,7 +154,7 @@ const PostDetails = ({ toggleTheme }) => {
           setloading(false);
           setpostData(data);
         } else {
-          setloading(false)
+          setloading(false);
           setnotfound(true);
         }
       } catch (error) {
@@ -230,7 +230,7 @@ const PostDetails = ({ toggleTheme }) => {
             } z-10 border-b-2 border-[#363636] p-2  top-0 flex items-center justify-between`}
           >
             <div className=" flex items-center gap-3">
-              <div className=" overflow-hidden rounded-full flex items-center justify-center h-9 w-9">
+              <div className=" overflow-hidden border border-[#363636] rounded-full flex items-center justify-center h-9 w-9">
                 {postData.user.profileimage ? (
                   <img
                     src={postData.user.profileimage}
@@ -238,7 +238,9 @@ const PostDetails = ({ toggleTheme }) => {
                     alt=""
                   />
                 ) : (
-                  <i className="  text-2xl fa-solid fa-user" />
+                  <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                    {postData.user.username[0]}
+                  </div>
                 )}
               </div>
               <Link
@@ -282,7 +284,7 @@ const PostDetails = ({ toggleTheme }) => {
 
           <div className="flex-1 px-2 overflow-y-scroll scrollbar ">
             <div className=" flex items-center gap-3">
-              <div className=" overflow-hidden rounded-full h-9 flex items-center justify-center w-9">
+              <div className=" overflow-hidden border border-[#363636] rounded-full h-9 flex items-center justify-center w-9">
                 {postData.user.profileimage ? (
                   <img
                     src={postData.user.profileimage}
@@ -290,7 +292,9 @@ const PostDetails = ({ toggleTheme }) => {
                     alt=""
                   />
                 ) : (
-                  <i className="  text-2xl fa-solid fa-user" />
+                  <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                    {postData.user.username[0]}
+                  </div>
                 )}
               </div>
               <Link
@@ -314,11 +318,17 @@ const PostDetails = ({ toggleTheme }) => {
                     <div className=" flex items-center justify-between">
                       <div className=" flex items-center gap-2">
                         <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#262626]">
-                          <img
-                            src={comment.user.profileimage}
-                            className=" h-full w-full object-contain"
-                            alt=""
-                          />
+                          {comment.user.profileimage ? (
+                            <img
+                              src={comment.user.profileimage}
+                              className=" h-full w-full object-contain"
+                              alt=""
+                            />
+                          ) : (
+                            <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                              {comment.user.username[0]}
+                            </div>
+                          )}
                         </div>
                         <div className="">
                           <p>{comment.user.username}</p>

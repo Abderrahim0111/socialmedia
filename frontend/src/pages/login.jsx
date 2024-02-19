@@ -1,8 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loggedIn } from "../redux/userSlice";
 
+// eslint-disable-next-line react/prop-types
 const Login = ({toggleTheme}) => {
   const [userData, setuserData] = useState({});
   const [loading, setloading] = useState(false);

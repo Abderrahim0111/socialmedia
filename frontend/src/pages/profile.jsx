@@ -24,7 +24,6 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
   const [isMore, setisMore] = useState(false);
   const dispatch = useDispatch();
 
-
   const logout = async () => {
     try {
       const res = await fetch("/api/logout");
@@ -48,7 +47,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
         setuserPosts(data.posts);
         return setuser(data.user);
       }
-      setdataFetchingLoading(false)
+      setdataFetchingLoading(false);
     };
     fetchUserPosts();
     const fetchUserSavedPosts = async () => {
@@ -130,7 +129,6 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
     user.followers.filter((follower) => {
       return follower._id === currentUser._id;
     });
-
 
   if (dataFetchingLoading) {
     return <p className=" ">Loading...</p>;
@@ -404,11 +402,17 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
                     >
                       <div className=" flex items-center gap-2">
                         <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#262626]">
-                          <img
-                            src={follower.profileimage}
-                            className=" h-full w-full object-contain"
-                            alt=""
-                          />
+                          {follower.profileimage ? (
+                            <img
+                              src={follower.profileimage}
+                              className=" h-full w-full object-contain"
+                              alt=""
+                            />
+                          ) : (
+                            <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-xl">
+                              {follower.username[0]}
+                            </div>
+                          )}
                         </div>
                         <Link
                           onClick={() => {
@@ -462,11 +466,17 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
                     >
                       <div className=" flex items-center gap-2">
                         <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#262626]">
-                          <img
-                            src={following.profileimage}
-                            className=" h-full w-full object-contain"
-                            alt=""
-                          />
+                          {following.profileimage ? (
+                            <img
+                              src={following.profileimage}
+                              className=" h-full w-full object-contain"
+                              alt=""
+                            />
+                          ) : (
+                            <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-xl">
+                              {following.username[0]}
+                            </div>
+                          )}
                         </div>
                         <Link
                           to={`/${following.username}`}

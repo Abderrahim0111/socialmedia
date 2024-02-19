@@ -11,13 +11,13 @@ const Post = ({ postData, toggleTheme }) => {
   const [comment, setcomment] = useState("");
   const [isComment, setisComment] = useState(false);
   const [isLikes, setisLikes] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const likeRef = useRef();
   const [isdelete, setisdelete] = useState(false);
   const [newComment, setnewComment] = useState("");
   const [editComment, seteditComment] = useState(false);
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const handleArrowClick = (direction) => {
     const newIndex =
       direction === "left"
@@ -67,22 +67,21 @@ const Post = ({ postData, toggleTheme }) => {
   const savePost = async () => {
     try {
       const res = await fetch(`/api/savePost/${postData._id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const data = await res.json()
-      if(!data.error){
-        const userRes = await fetch(`/api/fetchUser/${currentUser._id}`)
-        const userData = await userRes.json()
-        return dispatch(loggedIn(userData))
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (!data.error) {
+        const userRes = await fetch(`/api/fetchUser/${currentUser._id}`);
+        const userData = await userRes.json();
+        return dispatch(loggedIn(userData));
       }
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
-
+  };
 
   const deleteComment = async (commentId) => {
     const confirm = window.confirm(
@@ -92,9 +91,12 @@ const Post = ({ postData, toggleTheme }) => {
       return;
     }
     try {
-      const res = await fetch(`/api/deleteComment/${postData._id}/${commentId}`, {
-        method: "PUT",
-      });
+      const res = await fetch(
+        `/api/deleteComment/${postData._id}/${commentId}`,
+        {
+          method: "PUT",
+        }
+      );
       const data = await res.json();
       console.log(data);
     } catch (error) {
@@ -112,9 +114,9 @@ const Post = ({ postData, toggleTheme }) => {
         body: JSON.stringify({ newComment: newComment }),
       });
       const data = await res.json();
-      if(!data.error){
-        setnewComment('')
-        seteditComment(false)
+      if (!data.error) {
+        setnewComment("");
+        seteditComment(false);
       }
       console.log(data);
     } catch (error) {
@@ -125,10 +127,14 @@ const Post = ({ postData, toggleTheme }) => {
   const isSaved = currentUser.saves.includes(postData._id);
 
   return (
-    <div className={` mx-3 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} p-3 rounded-lg h-fit flex flex-col max-w-lg`}>
+    <div
+      className={` mx-3 ${
+        toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+      } p-3 rounded-lg h-fit flex flex-col max-w-lg`}
+    >
       <ul className=" mb-2 flex gap-3 items-center justify-between">
         <li className=" flex items-center gap-3">
-          <li className=" h-10 w-10 rounded-full overflow-hidden flex items-center justify-center">
+          <li className="border border-[#363636] h-10 w-10 rounded-full overflow-hidden flex items-center justify-center">
             {postData.user.profileimage ? (
               <img
                 src={postData.user.profileimage}
@@ -136,7 +142,9 @@ const Post = ({ postData, toggleTheme }) => {
                 alt=""
               />
             ) : (
-              <i className="  text-2xl fa-solid fa-user" />
+              <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                {postData.user.username[0]}
+              </div>
             )}
           </li>
           <li>
@@ -218,9 +226,14 @@ const Post = ({ postData, toggleTheme }) => {
           </li>
         </li>
         <li className=" flex items-center gap-3">
-          <li onClick={() => {
-            setisComment(true)
-          }} className="underline cursor-pointer">{postData.comments.length} comments</li>
+          <li
+            onClick={() => {
+              setisComment(true);
+            }}
+            className="underline cursor-pointer"
+          >
+            {postData.comments.length} comments
+          </li>
         </li>
       </ul>
       <hr className=" my-2" />
@@ -242,7 +255,7 @@ const Post = ({ postData, toggleTheme }) => {
             name=""
             id=""
           />
-          <span>{!isLike?'Like': 'Liked'}</span>
+          <span>{!isLike ? "Like" : "Liked"}</span>
         </li>
         <li
           onClick={() => {
@@ -253,16 +266,33 @@ const Post = ({ postData, toggleTheme }) => {
           <i className=" hover:scale-110 duration-300 transition-all text-xl fa-regular fa-comment" />{" "}
           <span>Comment</span>
         </li>
-        <li onClick={savePost} className={`${isSaved ? 'text-[#027FFE]': ''} cursor-pointer flex items-center gap-2`}>
-          <i className={` hover:scale-110 duration-300 transition-all text-xl ${!isSaved?'fa-regular': 'fa-solid'} fa-bookmark`} />{" "}
-          <span>{!isSaved?'Save': 'Saved'}</span>
+        <li
+          onClick={savePost}
+          className={`${
+            isSaved ? "text-[#027FFE]" : ""
+          } cursor-pointer flex items-center gap-2`}
+        >
+          <i
+            className={` hover:scale-110 duration-300 transition-all text-xl ${
+              !isSaved ? "fa-regular" : "fa-solid"
+            } fa-bookmark`}
+          />{" "}
+          <span>{!isSaved ? "Save" : "Saved"}</span>
         </li>
       </ul>
       {isComment && (
         <div className=" fixed top-0 bottom-0 left-0 right-0 bg-[#00000099] flex items-center justify-center z-20">
-          <div className={` p-3 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'}  flex flex-col w-[500px] h-[600px] rounded-xl `}>
+          <div
+            className={` p-3 ${
+              toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+            }  flex flex-col w-[500px] h-[600px] rounded-xl `}
+          >
             <div className=" flex-1 flex flex-col scrollbar  overflow-y-scroll scrollbar">
-              <div className={`flex items-center border-b-2 border-[#363636] pb-2 mb-3 justify-between sticky top-0 z-10 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'}`}>
+              <div
+                className={`flex items-center border-b-2 border-[#363636] pb-2 mb-3 justify-between sticky top-0 z-10 ${
+                  toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+                }`}
+              >
                 <div className=""></div>
                 <h3 className=" text-left">Add a comment</h3>
                 <i
@@ -277,38 +307,48 @@ const Post = ({ postData, toggleTheme }) => {
                   return (
                     <div
                       key={index}
-                      className={` ${toggleTheme === 'dark'? 'bg-[#363636]': 'bg-white'} rounded-lg p-1 mb-2`}
+                      className={` ${
+                        toggleTheme === "dark" ? "bg-[#363636]" : "bg-white"
+                      } rounded-lg p-1 mb-2`}
                     >
                       <div className=" flex items-center justify-between">
-                      <div className=" flex items-center gap-2">
-                        <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#262626]">
-                          <img
-                            src={comment.user.profileimage}
-                            className=" h-full w-full object-contain"
-                            alt=""
-                          />
+                        <div className=" flex items-center gap-2">
+                          <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#262626]">
+                            {comment.user.profileimage ? (
+                              <img
+                                src={comment.user.profileimage}
+                                className=" h-full w-full object-contain"
+                                alt=""
+                              />
+                            ) : (
+                              <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                                {comment.user.username[0]}
+                              </div>
+                            )}
+                          </div>
+                          <div className="">
+                            <p>{comment.user.username}</p>
+                            <p className=" text-sm opacity-80">
+                              {moment(comment.timestamp).fromNow()}
+                            </p>
+                          </div>
                         </div>
-                        <div className="">
-                          <p>{comment.user.username}</p>
-                          <p className=" text-sm opacity-80">{moment(comment.timestamp).fromNow()}</p>
-                        </div>
-                      </div>
-                      {comment.user._id === currentUser._id && (
-                        <div className=" flex items-center gap-3">
-                          <i
-                            onClick={() => {
-                              seteditComment(true);
-                            }}
-                            className="fa-regular fa-pen-to-square text-lg text-[#027FFE] cursor-pointer duration-300 transition-all hover:scale-110"
-                          />
-                          <i
-                            onClick={() => {
-                              deleteComment(comment._id);
-                            }}
-                            className=" text-red-500 text-lg cursor-pointer duration-300 transition-all hover:scale-110 fa-solid fa-trash"
-                          />
-                        </div>
-                      )}
+                        {comment.user._id === currentUser._id && (
+                          <div className=" flex items-center gap-3">
+                            <i
+                              onClick={() => {
+                                seteditComment(true);
+                              }}
+                              className="fa-regular fa-pen-to-square text-lg text-[#027FFE] cursor-pointer duration-300 transition-all hover:scale-110"
+                            />
+                            <i
+                              onClick={() => {
+                                deleteComment(comment._id);
+                              }}
+                              className=" text-red-500 text-lg cursor-pointer duration-300 transition-all hover:scale-110 fa-solid fa-trash"
+                            />
+                          </div>
+                        )}
                       </div>
                       <p className=" break-words">{comment.comment}</p>
                       {editComment && (
@@ -374,9 +414,17 @@ const Post = ({ postData, toggleTheme }) => {
       )}
       {isLikes && (
         <div className=" fixed top-0 bottom-0 left-0 right-0 bg-[#00000099] flex items-center justify-center z-20">
-          <div className={` p-3 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'}  flex flex-col w-[300px] h-fit rounded-xl `}>
+          <div
+            className={` p-3 ${
+              toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+            }  flex flex-col w-[300px] h-fit rounded-xl `}
+          >
             <div className=" flex-1 flex flex-col  overflow-y-scroll scrollbar">
-              <div className={`flex items-center border-b-2 border-[#363636] pb-2 mb-3 justify-between sticky top-0 z-10 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'}`}>
+              <div
+                className={`flex items-center border-b-2 border-[#363636] pb-2 mb-3 justify-between sticky top-0 z-10 ${
+                  toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+                }`}
+              >
                 <div className=""></div>
                 <h3 className=" text-left">Likes</h3>
                 <i
@@ -391,21 +439,27 @@ const Post = ({ postData, toggleTheme }) => {
                   return (
                     <div
                       key={index}
-                      className={` ${toggleTheme === 'dark'? 'bg-[#363636]': 'bg-white'} rounded-lg p-1 mb-2`}
+                      className={` ${
+                        toggleTheme === "dark" ? "bg-[#363636]" : "bg-white"
+                      } rounded-lg p-1 mb-2`}
                     >
                       <div className=" flex items-center gap-2">
-                        <div className=" h-9 w-9 rounded-full">
-                          <img
-                            src={like.profileimage}
-                            className=" h-full w-full object-contain"
-                            alt=""
-                          />
+                        <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#262626]">
+                          {like.profileimage ? (
+                            <img
+                              src={like.profileimage}
+                              className=" h-full w-full object-contain"
+                              alt=""
+                            />
+                          ) : (
+                            <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                              {like.username[0]}
+                            </div>
+                          )}
                         </div>
                         <div className="">
                           <p>{like.username}</p>
-                          <p className=" text-sm opacity-80">
-                            
-                          </p>
+                          <p className=" text-sm opacity-80"></p>
                         </div>
                       </div>
                     </div>

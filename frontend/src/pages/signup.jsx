@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loggedIn } from "../redux/userSlice";
 
+// eslint-disable-next-line react/prop-types
 const Signup = ({toggleTheme}) => {
   const [userData, setuserData] = useState({});
   const [error, seterror] = useState("");

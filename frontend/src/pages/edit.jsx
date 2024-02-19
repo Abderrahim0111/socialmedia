@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedIn } from "../redux/userSlice";
 
+// eslint-disable-next-line react/prop-types
 const Edit = ({toggleTheme}) => {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -126,11 +127,11 @@ const Edit = ({toggleTheme}) => {
               <span>Edit</span> <i className="fa-solid fa-pen" />
             </p>
           </div>
-          <img
+          {profileimage && <img
             src={profileimage}
             alt="image"
             className=" h-full w-full rounded-full object-contain"
-          />
+          />}
         </div>
       </div>
       <input

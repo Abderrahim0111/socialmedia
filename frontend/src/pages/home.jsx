@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Post from "../components/post";
 import { useState } from "react";
 
+// eslint-disable-next-line react/prop-types
 const Home = ({toggleTheme}) => {
   const [postsData, setpostsData] = useState([]);
   const [loading, setloading] = useState(true);

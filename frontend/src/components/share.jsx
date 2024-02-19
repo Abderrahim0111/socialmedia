@@ -9,7 +9,7 @@ const Share = ({
   imageUrls,
   setshowModal,
   imageFiles,
-  toggleTheme
+  toggleTheme,
 }) => {
   const [loading, setloading] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -75,8 +75,16 @@ const Share = ({
     setCurrentImageIndex(newIndex);
   };
   return (
-    <div className={`  overflow-y-scroll scrollbar sm:overflow-y-hidden relative transition-opacity duration-300 flex flex-col ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} sm:h-[630px] h-[480px] mx-6 w-full sm:w-[800px] rounded-xl`}>
-      <div className={` p-2 sticky top-0 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} z-30 flex justify-between items-center`}>
+    <div
+      className={`  overflow-y-scroll scrollbar sm:overflow-y-hidden relative transition-opacity duration-300 flex flex-col ${
+        toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+      } sm:h-[630px] h-[480px] mx-6 w-full sm:w-[800px] rounded-xl`}
+    >
+      <div
+        className={` p-2 sticky top-0 ${
+          toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+        } z-30 flex justify-between items-center`}
+      >
         <i
           onClick={() => {
             setisShare(false);
@@ -133,7 +141,7 @@ const Share = ({
         </div>
         <div className=" h-fit p-3 flex-[0.6] flex flex-col gap-4">
           <div className=" flex items-center gap-2">
-            <div className=" overflow-hidden h-9 w-9 flex items-center justify-center rounded-full">
+            <div className=" overflow-hidden h-9 w-9 border border-[#363636] flex items-center justify-center rounded-full">
               {currentUser.profileimage ? (
                 <img
                   src={currentUser.profileimage}
@@ -141,7 +149,9 @@ const Share = ({
                   alt=""
                 />
               ) : (
-                <i className="  text-2xl fa-solid fa-user" />
+                <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-2xl">
+                  {currentUser.username[0]}
+                </div>
               )}
             </div>
             <p>{currentUser.name}</p>
@@ -164,8 +174,7 @@ const Share = ({
           </div>
           <h3 className=" text-lg">Default audience:</h3>
           <p className=" opacity-80">
-You can now set a default
-            audience.
+            You can now set a default audience.
             <br />
             This will be your audience for future posts, but you can change it
             for a particular post at any time.
@@ -193,19 +202,6 @@ You can now set a default
               name="seenBy"
               id="friends"
               checked={postData.seenBy === "friends"}
-              onChange={handleChange}
-            />
-          </div>
-          <div className=" hover:bg-[#363636] transition-all duration-300 p-2 rounded-lg flex items-center justify-between">
-            <label className=" flex-1 cursor-pointer" htmlFor="mee">
-              Only mee
-            </label>
-            <input
-              className=" cursor-pointer"
-              type="radio"
-              name="seenBy"
-              id="mee"
-              checked={postData.seenBy === "mee"}
               onChange={handleChange}
             />
           </div>

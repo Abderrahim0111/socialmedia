@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const Inbox = ({toggleTheme}) => {
+// eslint-disable-next-line react/prop-types
+const Inbox = ({ toggleTheme }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setsearchTerm] = useState("");
   const [users, setusers] = useState([]);
@@ -41,7 +42,7 @@ const Inbox = ({toggleTheme}) => {
     const data = await res.json();
     if (!data.error) {
       setchats(data);
-      setisNewMessage(false)
+      setisNewMessage(false);
       console.log(data);
     }
   };
@@ -113,8 +114,16 @@ const Inbox = ({toggleTheme}) => {
   if (loading) return <p className=" ">Loading...</p>;
   return (
     <div className=" flex min-h-screen mb-[-100px] sm:ml-[-18px] mt-[-32px]">
-      <div className={`${isClicked && "hidden"} sm:block p-3 border-r-2 border-[#262626] w-full sm:w-80`}>
-        <div className={` px-3 pt-3 sticky top-[55px] sm:top-0 z-10 ${toggleTheme === 'dark'? 'bg-black': 'bg-white'}`}>
+      <div
+        className={`${
+          isClicked && "hidden"
+        } sm:block p-3 border-r-2 border-[#262626] w-full sm:w-80`}
+      >
+        <div
+          className={` px-3 pt-3 sticky top-[55px] sm:top-0 z-10 ${
+            toggleTheme === "dark" ? "bg-black" : "bg-white"
+          }`}
+        >
           <div className=" flex items-center justify-between mb-5">
             <p className=" text-xl font-semibold">{currentUser.username}</p>
             <i
@@ -139,14 +148,24 @@ const Inbox = ({toggleTheme}) => {
                   setisClicked(true);
                 }}
                 key={index}
-                className={` flex  items-center gap-3 mb-3 p-2 rounded-lg ${toggleTheme === 'dark'? 'hover:bg-[#363636]': 'hover:bg-[#F1F2F5]'} duration-300 transition-all cursor-pointer`}
+                className={` flex  items-center gap-3 mb-3 p-2 rounded-lg ${
+                  toggleTheme === "dark"
+                    ? "hover:bg-[#363636]"
+                    : "hover:bg-[#F1F2F5]"
+                } duration-300 transition-all cursor-pointer`}
               >
                 <div className=" border border-[#363636] h-11 w-11 rounded-full overflow-hidden">
-                  <img
-                    src={ddd.profileimage}
-                    className=" h-full w-full object-contain"
-                    alt=""
-                  />
+                  {ddd.profileimage ? (
+                    <img
+                      src={ddd.profileimage}
+                      className=" h-full w-full object-contain"
+                      alt=""
+                    />
+                  ) : (
+                    <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-xl">
+                      {ddd.username[0]}
+                    </div>
+                  )}
                 </div>
                 <div className="">
                   <p>{ddd.username}</p>
@@ -159,47 +178,83 @@ const Inbox = ({toggleTheme}) => {
           })}
       </div>
       {isClicked ? (
-        <div className={`flex-1 ${isClicked? "flex": "hidden"} h-[calc(100vh-120px)] sm:h-screen  sm:flex flex-col gap-8`}>
-          <div className={`flex items-center sticky top-[58px] sm:top-0 z-10 ${toggleTheme === 'dark'? 'bg-black': 'bg-white'} border-b-2 border-[#262626] gap-3 p-2`}>
-          <i onClick={() => {
-            setisClicked(false)
-          }} className=" flex sm:hidden text-2xl fa-solid fa-arrow-left cursor-pointer hover:scale-110 transition-all duration-300" />
+        <div
+          className={`flex-1 ${
+            isClicked ? "flex" : "hidden"
+          } h-[calc(100vh-120px)] sm:h-screen  sm:flex flex-col gap-8`}
+        >
+          <div
+            className={`flex items-center sticky top-[58px] sm:top-0 z-10 ${
+              toggleTheme === "dark" ? "bg-black" : "bg-white"
+            } border-b-2 border-[#262626] gap-3 p-2`}
+          >
+            <i
+              onClick={() => {
+                setisClicked(false);
+              }}
+              className=" flex sm:hidden text-2xl fa-solid fa-arrow-left cursor-pointer hover:scale-110 transition-all duration-300"
+            />
             <div className=" h-9 w-9 rounded-full overflow-hidden border border-[#363636]">
-              <img
-                src={profileImageSrc}
-                className=" h-full w-full object-contain"
-                alt=""
-              />
+              {profileImageSrc ? (
+                <img
+                  src={profileImageSrc}
+                  className=" h-full w-full object-contain"
+                  alt=""
+                />
+              ) : (
+                <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-xl">
+                  {chatwithusername[0]}
+                </div>
+              )}
             </div>
             <p>{chatwithusername}</p>
           </div>
           <div className=" flex-1 overflow-y-scroll scrollbar">
-          <div className="flex flex-col items-center mt-8">
-            <div className="  border border-[#363636] rounded-full h-20 w-20 overflow-hidden">
-              <img
-                src={profileImageSrc}
-                className=" h-full w-full object-contain"
-                alt=""
-              />
+            <div className="flex flex-col items-center mt-8">
+              <div className="  border border-[#363636] rounded-full h-20 w-20 overflow-hidden">
+                {profileImageSrc ? (
+                  <img
+                    src={profileImageSrc}
+                    className=" h-full w-full object-contain"
+                    alt=""
+                  />
+                ) : (
+                  <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-5xl">
+                    {chatwithusername[0]}
+                  </div>
+                )}
+              </div>
+              <p className=" mt-1">{chatwithusername}</p>
+              <Link to={`/${chatwithusername}`}>
+                <button
+                  className={` px-4 py-1 mt-4 mb-6 ${
+                    toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+                  } rounded-lg cursor-pointer `}
+                >
+                  View profile
+                </button>
+              </Link>
             </div>
-            <p className=" mt-1">{chatwithusername}</p>
-            <Link to={`/${chatwithusername}`}>
-              <button className={` px-4 py-1 mt-4 mb-6 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} rounded-lg cursor-pointer `}>
-                View profile
-              </button>
-            </Link>
-          </div>
-          <div className=" flex flex-col gap-2 px-2 mb-2">
-            {messages.length > 0 &&
-              messages.map((message, index) => {
-                if (message.sender._id === currentUser._id) {
-                  return <MessageSelf  {...{ message, toggleTheme }} />;
-                } else {
-                  return <MessageOther  {...{ message, toggleTheme }} />;
-                }
-              })}
-          </div>
-
+            <div className=" flex flex-col gap-2 px-2 mb-2">
+              {messages.length > 0 &&
+                messages.map((message) => {
+                  if (message.sender._id === currentUser._id) {
+                    return (
+                      <MessageSelf
+                        key={message._id}
+                        {...{ message, toggleTheme }}
+                      />
+                    );
+                  } else {
+                    return (
+                      <MessageOther
+                        key={message._id}
+                        {...{ message, toggleTheme }}
+                      />
+                    );
+                  }
+                })}
+            </div>
           </div>
           <div className=" p-2 mb-2">
             <form
@@ -232,7 +287,9 @@ const Inbox = ({toggleTheme}) => {
             onClick={() => {
               setisNewMessage(true);
             }}
-            className={` mt-6 bg-[#0295F6] ${toggleTheme === 'dark'? '': 'text-white'} rounded-lg px-3 py-1 cursor-pointer hover:opacity-80 transition-all duration-300`}
+            className={` mt-6 bg-[#0295F6] ${
+              toggleTheme === "dark" ? "" : "text-white"
+            } rounded-lg px-3 py-1 cursor-pointer hover:opacity-80 transition-all duration-300`}
           >
             Send message
           </button>
@@ -240,8 +297,16 @@ const Inbox = ({toggleTheme}) => {
       )}
       {isNewMessage && (
         <div className=" bg-[#00000099] fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center">
-          <div className={`${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} px-2 flex flex-col rounded-xl overflow-y-scroll scrollbar w-[300px] sm:w-[400px] h-[500px]`}>
-            <div className={`flex sticky top-0 ${toggleTheme === 'dark'? 'bg-[#262626]': 'bg-[#F1F2F5]'} z-10 justify-between p-2 items-center`}>
+          <div
+            className={`${
+              toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+            } px-2 flex flex-col rounded-xl overflow-y-scroll scrollbar w-[300px] sm:w-[400px] h-[500px]`}
+          >
+            <div
+              className={`flex sticky top-0 ${
+                toggleTheme === "dark" ? "bg-[#262626]" : "bg-[#F1F2F5]"
+              } z-10 justify-between p-2 items-center`}
+            >
               <div className=""></div>
               <h3 className=" text-xl">New message</h3>
               <i
@@ -275,15 +340,25 @@ const Inbox = ({toggleTheme}) => {
                       className={`flex items-center gap-2 ${
                         selectedUser === user._id
                           ? "bg-[#3697F0] hover:bg-[#3697F0]"
-                          : `${toggleTheme === 'dark'? 'hoverbg-[#363636]': 'hover:bg-white'}`
+                          : `${
+                              toggleTheme === "dark"
+                                ? "hoverbg-[#363636]"
+                                : "hover:bg-white"
+                            }`
                       } transition-all duration-300 mb-2 rounded-lg px-1 py-2 cursor-pointer`}
                     >
                       <div className=" border border-[#363636] rounded-full h-8 w-8 overflow-hidden">
-                        <img
-                          src={user.profileimage}
-                          className=" h-full w-full object-contain"
-                          alt=""
-                        />
+                        {user.profileimage ? (
+                          <img
+                            src={user.profileimage}
+                            className=" h-full w-full object-contain"
+                            alt=""
+                          />
+                        ) : (
+                          <div className=" items-center justify-center flex h-full w-full font-bold uppercase text-xl">
+                            {user.username[0]}
+                          </div>
+                        )}
                       </div>
                       <p>{user.username}</p>
                     </div>
@@ -295,7 +370,12 @@ const Inbox = ({toggleTheme}) => {
             </div>
             <button
               onClick={handleSubmit}
-              disabled={!selectedUser}
+              disabled={
+                !selectedUser ||
+                chats.some((chat) =>
+                  chat.users.map((user) => user._id).includes(selectedUser)
+                )
+              }
               className={` bg-[#3697F0] ${
                 selectedUser
                   ? "cursor-pointer"
