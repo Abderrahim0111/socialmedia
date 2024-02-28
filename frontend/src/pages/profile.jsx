@@ -27,7 +27,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
 
   const logout = async () => {
     try {
-      const res = await fetch(`${api}/logout`);
+      const res = await fetch(`${api}/logout`, {credentials: 'include'});
       const data = await res.json();
       if (data.error) {
         return console.log(data.error);

@@ -22,7 +22,7 @@ const Footer = ({ toggleTheme, settoggleTheme }) => {
     setsearchTerm(term);
 
     try {
-      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`);
+      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`, {credentials: 'include'});
       const data = await res.json();
       setusers(data);
     } catch (error) {
@@ -32,7 +32,7 @@ const Footer = ({ toggleTheme, settoggleTheme }) => {
 
   const logout = async () => {
     try {
-      const res = await fetch(`${api}/logout`);
+      const res = await fetch(`${api}/logout`, {credentials: 'include'});
       const data = await res.json();
       if (data.error) {
         return console.log(data.error);

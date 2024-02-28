@@ -15,7 +15,7 @@ const Header = ({ toggleTheme }) => {
     setsearchTerm(term);
 
     try {
-      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`);
+      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`, {credentials: 'include'});
       const data = await res.json();
       setusers(data);
     } catch (error) {

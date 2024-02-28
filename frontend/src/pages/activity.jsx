@@ -14,7 +14,7 @@ const Activity = ({ toggleTheme }) => {
   useEffect(() => {
     const fetchLikedPosts = async () => {
       try {
-        const res = await fetch(`${api}/fetchLikedPosts`);
+        const res = await fetch(`${api}/fetchLikedPosts`, {credentials: 'include'});
         const data = await res.json();
         if (!data.error) {
           setlikedPosts(data);
@@ -28,7 +28,7 @@ const Activity = ({ toggleTheme }) => {
     };
     const fetchCommentedPosts = async () => {
         try {
-          const res = await fetch(`${api}/fetchCommentedPosts`);
+          const res = await fetch(`${api}/fetchCommentedPosts` ,{credentials: 'include'});
           const data = await res.json();
           if (!data.error) {
             setcommentedPosts(data);

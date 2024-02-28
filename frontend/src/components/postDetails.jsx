@@ -36,6 +36,7 @@ const PostDetails = ({ toggleTheme }) => {
     try {
       const res = await fetch(`${api}/updateLikes/${postData._id}`, {
         method: "PUT",
+        credentials: 'include'
       });
       const data = await res.json();
     } catch (error) {
@@ -55,6 +56,7 @@ const PostDetails = ({ toggleTheme }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ comment }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {
@@ -72,10 +74,11 @@ const PostDetails = ({ toggleTheme }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {
-        const userRes = await fetch(`${api}/fetchUser/${currentUser._id}`);
+        const userRes = await fetch(`${api}/fetchUser/${currentUser._id}`, {credentials: 'include'});
         const userData = await userRes.json();
         return dispatch(loggedIn(userData));
       }
@@ -88,6 +91,7 @@ const PostDetails = ({ toggleTheme }) => {
     try {
       const res = await fetch(`${api}/deletePost/${postId}`, {
         method: "DELETE",
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {
@@ -110,6 +114,7 @@ const PostDetails = ({ toggleTheme }) => {
     try {
       const res = await fetch(`${api}/deleteComment/${postId}/${commentId}`, {
         method: "PUT",
+        credentials: 'include'
       });
       const data = await res.json();
       console.log(data);
@@ -126,6 +131,7 @@ const PostDetails = ({ toggleTheme }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ newComment: newComment }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {
@@ -149,7 +155,7 @@ const PostDetails = ({ toggleTheme }) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`${api}/fetchPost/${postId}`);
+        const res = await fetch(`${api}/fetchPost/${postId}`, {credentials: 'include'});
         const data = await res.json();
         if (!data.error) {
           setloading(false);

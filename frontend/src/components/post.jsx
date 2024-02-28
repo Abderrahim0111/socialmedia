@@ -32,6 +32,7 @@ const Post = ({ postData, toggleTheme }) => {
     try {
       const res = await fetch(`${api}/updateLikes/${postData._id}`, {
         method: "PUT",
+        credentials: 'include'
       });
       const data = await res.json();
     } catch (error) {
@@ -55,6 +56,7 @@ const Post = ({ postData, toggleTheme }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ comment }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {
@@ -72,10 +74,11 @@ const Post = ({ postData, toggleTheme }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {
-        const userRes = await fetch(`${api}/fetchUser/${currentUser._id}`);
+        const userRes = await fetch(`${api}/fetchUser/${currentUser._id}`, {credentials: 'include'});
         const userData = await userRes.json();
         return dispatch(loggedIn(userData));
       }
@@ -96,6 +99,7 @@ const Post = ({ postData, toggleTheme }) => {
         `${api}/deleteComment/${postData._id}/${commentId}`,
         {
           method: "PUT",
+          credentials: 'include'
         }
       );
       const data = await res.json();
@@ -113,6 +117,7 @@ const Post = ({ postData, toggleTheme }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ newComment: newComment }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {

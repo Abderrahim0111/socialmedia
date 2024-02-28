@@ -8,7 +8,7 @@ const Notifications = ({ toggleTheme }) => {
   const [notifications, setnotifications] = useState([]);
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      const res = await fetch(`${api}/fetchCurrentUser`);
+      const res = await fetch(`${api}/fetchCurrentUser`, {credentials: 'include'});
       const data = await res.json();
       if (!data.error) {
         setloading(false);

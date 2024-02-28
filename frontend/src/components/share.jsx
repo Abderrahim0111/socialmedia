@@ -51,6 +51,7 @@ const Share = ({
             "Content-Type": "application/json",
           },
           body: JSON.stringify(updatedPostData),
+          credentials: 'include'
         });
         const data2 = await res2.json();
         if (!data2.error) {

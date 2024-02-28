@@ -25,7 +25,7 @@ const Inbox = ({ toggleTheme }) => {
     setsearchTerm(term);
 
     try {
-      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`);
+      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`, {credentials: 'include'});
       const data = await res.json();
       setusers(data);
     } catch (error) {
@@ -39,6 +39,7 @@ const Inbox = ({ toggleTheme }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ userId: selectedUser }),
+      credentials: 'include'
     });
     const data = await res.json();
     if (!data.error) {
@@ -50,7 +51,7 @@ const Inbox = ({ toggleTheme }) => {
 
   useEffect(() => {
     const fetchChats = async () => {
-      const res = await fetch(`${api}/fetchChats`);
+      const res = await fetch(`${api}/fetchChats`, {credentials: 'include'});
       const data = await res.json();
       if (!data.error) {
         setchats(data);
@@ -61,7 +62,7 @@ const Inbox = ({ toggleTheme }) => {
     fetchChats();
   }, [chats]);
   const fetchMessages = async (chatId) => {
-    const res = await fetch(`${api}/fetchAllMessages/${chatId}`);
+    const res = await fetch(`${api}/fetchAllMessages/${chatId}`, {credentials: 'include'});
     const data = await res.json();
     if (!data.error) {
       setmessages(data);
@@ -79,6 +80,7 @@ const Inbox = ({ toggleTheme }) => {
           content: content,
           chatId: chat._id,
         }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {
@@ -90,7 +92,7 @@ const Inbox = ({ toggleTheme }) => {
     }
   };
   const fetchChat = async (chatId) => {
-    const res = await fetch(`${api}/fetchChat/${chatId}`);
+    const res = await fetch(`${api}/fetchChat/${chatId}`, {credentials: 'include'});
     const data = await res.json();
     if (!data.error) {
       setchat(data);

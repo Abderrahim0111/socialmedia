@@ -26,7 +26,7 @@ const Edit = ({toggleTheme}) => {
       try {
         const res = await fetch(`${api}/uploadProfileImage`, {
           method: "POST",
-          body: formData,
+          body: formData, 
         });
         const data = await res.json();
         if (!data.error) {
@@ -37,6 +37,7 @@ const Edit = ({toggleTheme}) => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ ...profileData, profileimage: data }),
+            credentials: 'include',
           });
           const data2 = await res2.json();
           if (!data2.error) {
@@ -58,6 +59,7 @@ const Edit = ({toggleTheme}) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(profileData),
+          credentials: 'include'
         });
         const data = await res.json();
         if (!data.error) {
@@ -75,7 +77,7 @@ const Edit = ({toggleTheme}) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${api}/fetchUser/${currentUser._id}`);
+        const res = await fetch(`${api}/fetchUser/${currentUser._id}`, {credentials: 'include'});
         const data = await res.json();
         if (!data.error) {
           setuser(data);
