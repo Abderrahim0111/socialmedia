@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://socialsnap.onrender.com",
+        target: "https://socialsnapdef-api.vercel.app",
         changeOrigin: true,
         secure: false,
       },
