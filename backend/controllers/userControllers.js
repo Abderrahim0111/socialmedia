@@ -32,7 +32,9 @@ const signup = async (req, res) => {
     const { password: pass, ...rest } = user._doc;
     res.cookie("jwt", token, { 
       httpOnly: true, 
-      maxAge: 365 * 24 * 60 * 60 * 1000 // 1 year in milliseconds 
+      maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds 
+      secure: true, // Set the secure attribute
+      sameSite: 'none' // Allow cross-site cookies
     });
     res.json(rest);
   } catch (error) {
@@ -58,7 +60,9 @@ const login = async (req, res) => {
     const { password: pass, ...rest } = isUser._doc;
     res.cookie("jwt", token, { 
       httpOnly: true, 
-      maxAge: 365 * 24 * 60 * 60 * 1000 // 1 year in milliseconds 
+      maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds 
+      secure: true, // Set the secure attribute
+      sameSite: 'none' // Allow cross-site cookies
     });
     
     res.json(rest);
