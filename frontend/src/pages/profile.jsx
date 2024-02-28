@@ -135,7 +135,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
     return <p className=" ">Loading...</p>;
   }
 
-  if (!user.username) {
+  if (!user || !user.username) {
     return <NotFound />;
   }
 
