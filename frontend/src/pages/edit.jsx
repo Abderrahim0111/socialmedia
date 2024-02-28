@@ -43,7 +43,7 @@ const Edit = ({toggleTheme}) => {
           if (!data2.error) {
             setloadingg(false);
             dispatch(loggedIn(data2));
-            return console.log(data2);
+            return;
           }
         }
         setloadingg(false);
@@ -65,7 +65,7 @@ const Edit = ({toggleTheme}) => {
         if (!data.error) {
           setloadingg(false);
           dispatch(loggedIn(data));
-          return console.log(data);
+          return;
         }
         setloadingg(false);
       } catch (error) {

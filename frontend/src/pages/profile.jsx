@@ -74,7 +74,6 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
       });
       const data = await res.json();
       if (!data.error) {
-        console.log(typeof data);
         const res2 = await fetch(`${api}/updateProfileImage`, {
           method: "PUT",
           headers: {
@@ -104,7 +103,6 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
       });
       const data = await res.json();
       if (!data.error) {
-        console.log(data);
         dispatch(loggedIn(data));
       }
     } catch (error) {
@@ -122,7 +120,6 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
         credentials: 'include'
       });
       const data = await res.json();
-      console.log(data);
     } catch (error) {
       console.log(error.message);
     }
