@@ -9,10 +9,11 @@ const port = process.env.PORT;
 
 const cors = require("cors");
 app.use(cors({
-  origin: ["https://socialsnap-eta.vercel.app"],
+  origin: "https://socialsnap-eta.vercel.app",
   methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true
 }));
+
 
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
