@@ -9,7 +9,7 @@ const port = process.env.PORT;
 
 const cors = require("cors");
 app.use(cors({
-  origin: ["https://socialmedia-lilac-chi.vercel.app"],
+  origin: ["https://socialsnap-eta.vercel.app"],
   methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true
 }));
