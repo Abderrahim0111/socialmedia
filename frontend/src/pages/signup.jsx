@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loggedIn } from "../redux/userSlice";
+import { api } from "../utils/end";
 
 // eslint-disable-next-line react/prop-types
 const Signup = ({toggleTheme}) => {
@@ -17,7 +18,7 @@ const Signup = ({toggleTheme}) => {
     e.preventDefault();
     setloading(true);
     try {
-      const res = await fetch("/api/signup", {
+      const res = await fetch(`${api}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

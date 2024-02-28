@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import LikedPosts from "../components/likedPosts";
 import CommentedPosts from "../components/commentedPosts";
+import { api } from "../utils/end";
 
 const Activity = ({ toggleTheme }) => {
   const [isLikes, setisLikes] = useState(true);
@@ -13,7 +14,7 @@ const Activity = ({ toggleTheme }) => {
   useEffect(() => {
     const fetchLikedPosts = async () => {
       try {
-        const res = await fetch("/api/fetchLikedPosts");
+        const res = await fetch(`${api}/fetchLikedPosts`);
         const data = await res.json();
         if (!data.error) {
           setlikedPosts(data);
@@ -27,7 +28,7 @@ const Activity = ({ toggleTheme }) => {
     };
     const fetchCommentedPosts = async () => {
         try {
-          const res = await fetch("/api/fetchCommentedPosts");
+          const res = await fetch(`${api}/fetchCommentedPosts`);
           const data = await res.json();
           if (!data.error) {
             setcommentedPosts(data);

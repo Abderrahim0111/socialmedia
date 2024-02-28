@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedIn } from "../redux/userSlice";
+import { api } from "../utils/end";
 
 // eslint-disable-next-line react/prop-types
 const Edit = ({toggleTheme}) => {
@@ -23,14 +24,14 @@ const Edit = ({toggleTheme}) => {
       const formData = new FormData();
       formData.append("profileimage", profileData.profileimage);
       try {
-        const res = await fetch("/api/uploadProfileImage", {
+        const res = await fetch(`${api}/uploadProfileImage`, {
           method: "POST",
           body: formData,
         });
         const data = await res.json();
         if (!data.error) {
           setprofileData({ ...profileData, profileimage: data });
-          const res2 = await fetch("/api/updateProfile", {
+          const res2 = await fetch(`${api}/updateProfile`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -51,7 +52,7 @@ const Edit = ({toggleTheme}) => {
       }
     } else {
       try {
-        const res = await fetch("/api/updateProfile", {
+        const res = await fetch(`${api}/updateProfile`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -74,7 +75,7 @@ const Edit = ({toggleTheme}) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`/api/fetchUser/${currentUser._id}`);
+        const res = await fetch(`${api}/fetchUser/${currentUser._id}`);
         const data = await res.json();
         if (!data.error) {
           setuser(data);

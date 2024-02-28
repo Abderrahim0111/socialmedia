@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { api } from "../utils/end";
 
 const Header = ({ toggleTheme }) => {
   const [toggleSearch, settoggleSearch] = useState(false);
@@ -14,7 +15,7 @@ const Header = ({ toggleTheme }) => {
     setsearchTerm(term);
 
     try {
-      const res = await fetch(`/api/fetchUsers?searchTerm=${term}`);
+      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`);
       const data = await res.json();
       setusers(data);
     } catch (error) {

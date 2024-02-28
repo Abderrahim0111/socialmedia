@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { api } from "../utils/end";
 
 // eslint-disable-next-line react/prop-types
 const Share = ({
@@ -35,7 +36,7 @@ const Share = ({
       fromData.append("files", imageFiles[i]);
     }
     try {
-      const res = await fetch("/api/uplodaPostFiles", {
+      const res = await fetch(`${api}/uplodaPostFiles`, {
         method: "POST",
         body: fromData,
       });
@@ -44,7 +45,7 @@ const Share = ({
         console.log(data);
         const updatedPostData = { ...postData, pictures: data };
         // setpostData({...postData, pictures: [...data]})
-        const res2 = await fetch("/api/createPost", {
+        const res2 = await fetch(`${api}/createPost`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

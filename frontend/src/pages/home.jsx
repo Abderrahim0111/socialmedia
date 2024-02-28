@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Post from "../components/post";
 import { useState } from "react";
+import { api } from "../utils/end";
 
 // eslint-disable-next-line react/prop-types
 const Home = ({toggleTheme}) => {
@@ -9,7 +10,7 @@ const Home = ({toggleTheme}) => {
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
-        const res = await fetch("/api/fetchAllPosts");
+        const res = await fetch(`${api}/fetchAllPosts`);
         const data = await res.json();
         if (!data.error) {
           setloading(false);

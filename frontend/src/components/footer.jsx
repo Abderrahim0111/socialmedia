@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import CreatePost from "./createPost";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedIn } from "../redux/userSlice";
+import { api } from "../utils/end";
 
 const Footer = ({ toggleTheme, settoggleTheme }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -21,7 +22,7 @@ const Footer = ({ toggleTheme, settoggleTheme }) => {
     setsearchTerm(term);
 
     try {
-      const res = await fetch(`/api/fetchUsers?searchTerm=${term}`);
+      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`);
       const data = await res.json();
       setusers(data);
     } catch (error) {
@@ -31,7 +32,7 @@ const Footer = ({ toggleTheme, settoggleTheme }) => {
 
   const logout = async () => {
     try {
-      const res = await fetch("/api/logout");
+      const res = await fetch(`${api}/logout`);
       const data = await res.json();
       if (data.error) {
         return console.log(data.error);

@@ -6,6 +6,7 @@ import { loggedIn } from "../redux/userSlice";
 import IsPosts from "../components/isPosts";
 import IsSaved from "../components/isSaved";
 import NotFound from "./notFound";
+import { api } from "../utils/end";
 
 const Profile = ({ settoggleTheme, toggleTheme }) => {
   const inputRef = useRef();
@@ -26,7 +27,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
 
   const logout = async () => {
     try {
-      const res = await fetch("/api/logout");
+      const res = await fetch(`${api}/logout`);
       const data = await res.json();
       if (data.error) {
         return console.log(data.error);
@@ -40,7 +41,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
 
   useEffect(() => {
     const fetchUserPosts = async () => {
-      const res = await fetch(`/api/fetchUserPosts/${username}`);
+      const res = await fetch(`${api}/fetchUserPosts/${username}`);
       const data = await res.json();
       if (!data.error) {
         setdataFetchingLoading(false);
@@ -51,7 +52,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
     };
     fetchUserPosts();
     const fetchUserSavedPosts = async () => {
-      const res = await fetch(`/api/fetchUserSavedPosts/${username}`);
+      const res = await fetch(`${api}/fetchUserSavedPosts/${username}`);
       const data = await res.json();
       if (!data.error) {
         setsavedPosts(data);
@@ -67,14 +68,14 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
     formData.append("profileimage", e.target.files[0]);
     setloading(true);
     try {
-      const res = await fetch("/api/uploadProfileImage", {
+      const res = await fetch(`${api}/uploadProfileImage`, {
         method: "POST",
         body: formData,
       });
       const data = await res.json();
       if (!data.error) {
         console.log(typeof data);
-        const res2 = await fetch("/api/updateProfileImage", {
+        const res2 = await fetch(`${api}/updateProfileImage`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -96,7 +97,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
 
   const removeCurrentPhoto = async () => {
     try {
-      const res = await fetch("/api/removeCurrentPhoto", {
+      const res = await fetch(`${api}/removeCurrentPhoto`, {
         method: "PUT",
       });
       const data = await res.json();
@@ -111,7 +112,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
 
   const handleFollow = async () => {
     try {
-      const res = await fetch(`/api/follow/${username}`, {
+      const res = await fetch(`${api}/follow/${username}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

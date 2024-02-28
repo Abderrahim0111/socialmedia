@@ -4,6 +4,7 @@ import MessageOther from "../components/messageOther";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { api } from "../utils/end";
 
 // eslint-disable-next-line react/prop-types
 const Inbox = ({ toggleTheme }) => {
@@ -24,7 +25,7 @@ const Inbox = ({ toggleTheme }) => {
     setsearchTerm(term);
 
     try {
-      const res = await fetch(`/api/fetchUsers?searchTerm=${term}`);
+      const res = await fetch(`${api}/fetchUsers?searchTerm=${term}`);
       const data = await res.json();
       setusers(data);
     } catch (error) {
@@ -32,7 +33,7 @@ const Inbox = ({ toggleTheme }) => {
     }
   };
   const handleSubmit = async () => {
-    const res = await fetch("/api/accesChat", {
+    const res = await fetch(`${api}/accesChat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +50,7 @@ const Inbox = ({ toggleTheme }) => {
 
   useEffect(() => {
     const fetchChats = async () => {
-      const res = await fetch("/api/fetchChats");
+      const res = await fetch(`${api}/fetchChats`);
       const data = await res.json();
       if (!data.error) {
         setchats(data);
@@ -60,7 +61,7 @@ const Inbox = ({ toggleTheme }) => {
     fetchChats();
   }, [chats]);
   const fetchMessages = async (chatId) => {
-    const res = await fetch(`/api/fetchAllMessages/${chatId}`);
+    const res = await fetch(`${api}/fetchAllMessages/${chatId}`);
     const data = await res.json();
     if (!data.error) {
       setmessages(data);
@@ -69,7 +70,7 @@ const Inbox = ({ toggleTheme }) => {
   const sendMessage = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/sendMessage", {
+      const res = await fetch(`${api}/sendMessage`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +90,7 @@ const Inbox = ({ toggleTheme }) => {
     }
   };
   const fetchChat = async (chatId) => {
-    const res = await fetch(`/api/fetchChat/${chatId}`);
+    const res = await fetch(`${api}/fetchChat/${chatId}`);
     const data = await res.json();
     if (!data.error) {
       setchat(data);

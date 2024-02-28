@@ -1,0 +1,1 @@
+export const api = "https://socialsnapdef-api.vercel.app/api"

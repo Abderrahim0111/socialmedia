@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { api } from "../utils/end";
 
 // eslint-disable-next-line react/prop-types
 const Notifications = ({ toggleTheme }) => {
@@ -7,7 +8,7 @@ const Notifications = ({ toggleTheme }) => {
   const [notifications, setnotifications] = useState([]);
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      const res = await fetch(`/api/fetchCurrentUser`);
+      const res = await fetch(`${api}/fetchCurrentUser`);
       const data = await res.json();
       if (!data.error) {
         setloading(false);

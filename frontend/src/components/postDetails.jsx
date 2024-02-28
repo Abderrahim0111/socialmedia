@@ -5,6 +5,7 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedIn } from "../redux/userSlice";
 import NotFound from "../pages/notFound";
+import { api } from "../utils/end";
 
 const PostDetails = ({ toggleTheme }) => {
   const { postId } = useParams();
@@ -33,7 +34,7 @@ const PostDetails = ({ toggleTheme }) => {
 
   const handleLikes = async () => {
     try {
-      const res = await fetch(`/api/updateLikes/${postData._id}`, {
+      const res = await fetch(`${api}/updateLikes/${postData._id}`, {
         method: "PUT",
       });
       const data = await res.json();
@@ -48,7 +49,7 @@ const PostDetails = ({ toggleTheme }) => {
 
   const addComment = async () => {
     try {
-      const res = await fetch(`/api/addComment/${postData._id}`, {
+      const res = await fetch(`${api}/addComment/${postData._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ const PostDetails = ({ toggleTheme }) => {
 
   const savePost = async () => {
     try {
-      const res = await fetch(`/api/savePost/${postData._id}`, {
+      const res = await fetch(`${api}/savePost/${postData._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +75,7 @@ const PostDetails = ({ toggleTheme }) => {
       });
       const data = await res.json();
       if (!data.error) {
-        const userRes = await fetch(`/api/fetchUser/${currentUser._id}`);
+        const userRes = await fetch(`${api}/fetchUser/${currentUser._id}`);
         const userData = await userRes.json();
         return dispatch(loggedIn(userData));
       }
@@ -85,7 +86,7 @@ const PostDetails = ({ toggleTheme }) => {
 
   const deletePost = async () => {
     try {
-      const res = await fetch(`/api/deletePost/${postId}`, {
+      const res = await fetch(`${api}/deletePost/${postId}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -107,7 +108,7 @@ const PostDetails = ({ toggleTheme }) => {
       return;
     }
     try {
-      const res = await fetch(`/api/deleteComment/${postId}/${commentId}`, {
+      const res = await fetch(`${api}/deleteComment/${postId}/${commentId}`, {
         method: "PUT",
       });
       const data = await res.json();
@@ -119,7 +120,7 @@ const PostDetails = ({ toggleTheme }) => {
 
   const editCommentFn = async (commentId) => {
     try {
-      const res = await fetch(`/api/editComment/${postId}/${commentId}`, {
+      const res = await fetch(`${api}/editComment/${postId}/${commentId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +149,7 @@ const PostDetails = ({ toggleTheme }) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`/api/fetchPost/${postId}`);
+        const res = await fetch(`${api}/fetchPost/${postId}`);
         const data = await res.json();
         if (!data.error) {
           setloading(false);
