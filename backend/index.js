@@ -8,7 +8,10 @@ dotenv.config();
 const port = process.env.PORT;
 
 const cors = require("cors");
-app.use(cors());
+app.use(cors({
+  origin: ["https://socialmedia-lilac-chi.vercel.app"],
+  credentials: true
+}));
 
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
