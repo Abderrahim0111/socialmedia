@@ -10,8 +10,8 @@ const port = process.env.PORT;
 const cors = require("cors");
 app.use(cors());
 
-const cookieParser = require("cookie-parser");
-app.use(cookieParser());
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
 
 const mongoose = require("mongoose");
 mongoose
@@ -26,12 +26,11 @@ mongoose
   });
 
 
-
-const userRouter = require("./routes/userRoutes");
-app.use(userRouter);
-const postRouter = require("./routes/postRoutes");
-app.use(postRouter);
-const chatRouter = require("./routes/chatRoutes");
-app.use(chatRouter);
-const messageRouter = require("./routes/messageRoutes");
-app.use(messageRouter);
+const userRouter = require('./routes/userRoutes')
+app.use('/api' ,userRouter)
+const postRouter = require('./routes/postRoutes')
+app.use('/api', postRouter)
+const chatRouter = require('./routes/chatRoutes')
+app.use('/api', chatRouter)
+const messageRouter = require('./routes/messageRoutes')
+app.use('/api', messageRouter)
