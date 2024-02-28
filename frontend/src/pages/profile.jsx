@@ -44,9 +44,9 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
       const res = await fetch(`${api}/fetchUserPosts/${username}`);
       const data = await res.json();
       if (!data.error) {
-        setdataFetchingLoading(false);
         setuserPosts(data.posts);
-        return setuser(data.user);
+        setuser(data.user);
+        return setdataFetchingLoading(false);
       }
       setdataFetchingLoading(false);
     };
