@@ -41,7 +41,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
 
   useEffect(() => {
     const fetchUserPosts = async () => {
-      const res = await fetch(`${api}/fetchUserPosts/${username}`);
+      const res = await fetch(`${api}/fetchUserPosts/${username}`, {credentials: 'include'});
       const data = await res.json();
       if (!data.error) {
         setuserPosts(data.posts);
@@ -52,7 +52,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
     };
     fetchUserPosts();
     const fetchUserSavedPosts = async () => {
-      const res = await fetch(`${api}/fetchUserSavedPosts/${username}`);
+      const res = await fetch(`${api}/fetchUserSavedPosts/${username}`, {credentials: 'include'});
       const data = await res.json();
       if (!data.error) {
         setsavedPosts(data);
@@ -81,6 +81,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify([data]),
+          credentials: 'include',
         });
         const data2 = await res2.json();
         if (!data2.error) {
@@ -99,6 +100,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
     try {
       const res = await fetch(`${api}/removeCurrentPhoto`, {
         method: "PUT",
+        credentials: 'include',
       });
       const data = await res.json();
       if (!data.error) {
@@ -117,6 +119,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
       });
       const data = await res.json();
       console.log(data);
@@ -135,7 +138,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
     return <p className=" ">Loading...</p>;
   }
 
-  if (!user || !user.username) {
+  if (!user.username) {
     return <NotFound />;
   }
 
