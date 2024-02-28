@@ -10,7 +10,7 @@ const Home = ({toggleTheme}) => {
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
-        const res = await fetch(`${api}/fetchAllPosts`);
+        const res = await fetch(`${api}/fetchAllPosts`, {credentials: 'include'});
         const data = await res.json();
         if (!data.error) {
           setloading(false);
