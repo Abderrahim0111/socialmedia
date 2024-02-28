@@ -56,9 +56,9 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
       const data = await res.json();
       if (!data.error) {
         setsavedPosts(data);
-        return setloading(false);
+        return setdataFetchingLoading(false);
       }
-      setloading(false);
+      setdataFetchingLoading(false);
     };
     fetchUserSavedPosts();
   }, [userPosts, username]);
