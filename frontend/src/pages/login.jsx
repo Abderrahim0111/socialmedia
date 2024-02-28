@@ -25,6 +25,7 @@ const Login = ({toggleTheme}) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
+        credentials: 'include',
       });
       const data = await res.json();
       if (data.error) {
