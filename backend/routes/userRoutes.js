@@ -35,4 +35,8 @@ router.get("/fetchUser/:userId", requireAuth, fetchUser);
 router.put("/updateProfile", requireAuth, updateProfile);
 router.put('/savePost/:postId', requireAuth, savePost)
 
+router.get('/', (req, res) => {
+  res.json("server working!")
+})
+
 module.exports = router;

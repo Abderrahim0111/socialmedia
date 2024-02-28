@@ -25,6 +25,8 @@ mongoose
     console.log(err);
   });
 
+
+
 const userRouter = require("./routes/userRoutes");
 app.use(userRouter);
 const postRouter = require("./routes/postRoutes");
