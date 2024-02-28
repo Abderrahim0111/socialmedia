@@ -44,9 +44,9 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
       const res = await fetch(`${api}/fetchUserPosts/${username}`, {credentials: 'include'});
       const data = await res.json();
       if (!data.error) {
+        setdataFetchingLoading(false);
         setuserPosts(data.posts);
-        setuser(data.user);
-        return setdataFetchingLoading(false);
+        return setuser(data.user);
       }
       setdataFetchingLoading(false);
     };
@@ -56,9 +56,9 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
       const data = await res.json();
       if (!data.error) {
         setsavedPosts(data);
-        return setdataFetchingLoading(false);
+        return setloading(false);
       }
-      setdataFetchingLoading(false);
+      setloading(false);
     };
     fetchUserSavedPosts();
   }, [userPosts, username]);
@@ -81,7 +81,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify([data]),
-          credentials: 'include',
+          credentials: 'include'
         });
         const data2 = await res2.json();
         if (!data2.error) {
@@ -100,7 +100,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
     try {
       const res = await fetch(`${api}/removeCurrentPhoto`, {
         method: "PUT",
-        credentials: 'include',
+        credentials: 'include'
       });
       const data = await res.json();
       if (!data.error) {
@@ -119,7 +119,7 @@ const Profile = ({ settoggleTheme, toggleTheme }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: 'include'
       });
       const data = await res.json();
       console.log(data);
