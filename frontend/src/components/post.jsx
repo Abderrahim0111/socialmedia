@@ -2,7 +2,7 @@
 import moment from "moment";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loggedIn } from "../redux/userSlice";
 import { api } from "../utils/end";
 
@@ -14,10 +14,9 @@ const Post = ({ postData, toggleTheme }) => {
   const [isLikes, setisLikes] = useState(false);
   const dispatch = useDispatch();
   const likeRef = useRef();
-  const [isdelete, setisdelete] = useState(false);
   const [newComment, setnewComment] = useState("");
   const [editComment, seteditComment] = useState(false);
-  const navigate = useNavigate();
+  const [likeLoading, setlikeLoading] = useState(false);
 
   const handleArrowClick = (direction) => {
     const newIndex =
@@ -29,12 +28,14 @@ const Post = ({ postData, toggleTheme }) => {
   };
 
   const handleLikes = async () => {
+    setlikeLoading(true)
     try {
       const res = await fetch(`${api}/updateLikes/${postData._id}`, {
         method: "PUT",
         credentials: 'include'
       });
       const data = await res.json();
+      setlikeLoading(false)
     } catch (error) {
       console.log(error.message);
     }
@@ -249,7 +250,7 @@ const Post = ({ postData, toggleTheme }) => {
             likeRef.current.click();
           }}
           className={`${
-            isLike ? "text-[#027FFE]" : " "
+            (isLike || (likeLoading && !isLike)) ? "text-[#027FFE]" : " "
           } cursor-pointer flex items-center gap-2`}
         >
           <i className=" hover:scale-110 duration-300 transition-all text-xl fa-solid fa-thumbs-up" />{" "}

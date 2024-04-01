@@ -8,7 +8,9 @@ const Notifications = ({ toggleTheme }) => {
   const [notifications, setnotifications] = useState([]);
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      const res = await fetch(`${api}/fetchCurrentUser`, {credentials: 'include'});
+      const res = await fetch(`${api}/fetchCurrentUser`, {
+        credentials: "include",
+      });
       const data = await res.json();
       if (!data.error) {
         setloading(false);
@@ -18,7 +20,33 @@ const Notifications = ({ toggleTheme }) => {
     };
     fetchCurrentUser();
   }, [notifications]);
-  if (loading) return <p className=" ">Loading...</p>;
+  if (loading)
+    return (
+      <div className="  max-w-lg mx-auto">
+        {[1,1].map((item, index) => {
+          return (
+            <div
+              className={` ${
+                toggleTheme === "dark" ? "bg-[#363636]" : "bg-[#F1F2F5]"
+              } p-2 rounded-lg m-2`}
+              key={index}
+            >
+              <div className="flex items-center gap-3">
+                <div className={` rounded-full h-10 w-10 ${toggleTheme=="dark"?"bg-[#262626] border-[#262626]":"bg-white border-white"} overflow-hidden border `}>
+
+                </div>
+                <div className=" flex flex-col">
+                  <p className={` w-[90px] animate-pulse p-2 rounded-md ${toggleTheme=="dark"?"bg-[#262626]":"bg-white"} mb-2`}></p>
+                  <p className={` w-[60px] animate-pulse p-2 rounded-md ${toggleTheme=="dark"?"bg-[#262626]":"bg-white"}`}>
+                  </p>
+                </div>
+              </div>
+              <p className={`mt-3 animate-pulse p-3 rounded-md ${toggleTheme=="dark"?"bg-[#262626]":"bg-white"}`}></p>
+            </div>
+          );
+        })}
+      </div>
+    );
   return (
     <div className="  max-w-lg mx-auto">
       {notifications.map((notification, index) => {
